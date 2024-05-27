@@ -22,7 +22,7 @@ public class PasswordStrengthMeter {
 
     private boolean meetsContainingNumberCriteria(String s) {
         for(char ch : s.toCharArray()){
-            if(ch >='0' && ch<='9'){
+            if(ch >='0' && ch<='92'){
                 return true;
             }
         }
