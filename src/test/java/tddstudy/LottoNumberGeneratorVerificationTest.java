@@ -18,52 +18,43 @@ public class LottoNumberGeneratorVerificationTest {
     // 2-4. 1~45일 때는 성공인지 확인
     // 3. 중복되는 번호가 있는가?
 
-
     LottoNumberGenerator lng = new LottoNumberGenerator();
 
     @Test
-    void lengthCriteria(){
+    void lengthCriteria() {
         int[] nums = lng.createLottoNumber();
-        Assertions.assertEquals(nums.length,6);
+        Assertions.assertEquals(nums.length, 6);
     }
 
     @Test
-    void rangeCriteria(){
+    void rangeCriteria() {
         int[] nums = lng.createLottoNumber();
 
         Boolean isRangeCriteria = Boolean.TRUE;
-        for(int i = 0; i < nums.length; i++){
-            if(45<nums[i]){
+        for (int i = 0; i < nums.length; i++) {
+            if (45 < nums[i]) {
                 isRangeCriteria = Boolean.FALSE;
-                System.out.println("["+i+"]의 숫자가 45보다 큽니다.");
+                System.out.println("[" + i + "]의 숫자가 45보다 큽니다.");
                 break;
             }
-            if(1 > nums[i]){
+            if (1 > nums[i]) {
                 isRangeCriteria = Boolean.FALSE;
-                System.out.println("["+i+"]의 숫자가 1보다 작습니다.");
+                System.out.println("[" + i + "]의 숫자가 1보다 작습니다.");
                 break;
             }
         }
-        Assertions.assertEquals(isRangeCriteria,Boolean.TRUE);
+        Assertions.assertEquals(isRangeCriteria, Boolean.TRUE);
     }
 
     @Test
-    void uniqueCriteria(){
+    void uniqueCriteria() {
         int[] nums = lng.createLottoNumber();
+        Assertions.assertEquals(6, nums.length);
 
-        Boolean isUniqueCriteria = Boolean.TRUE;
-        for(int i = 0; i < nums.length; i++){
-            for(int j = 0; j < nums.length; j++){
-                if(i != j){
-                    if(nums[i] == nums[j]){
-                        isUniqueCriteria = Boolean.FALSE;
-                    }
-                }
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                Assertions.assertNotEquals(nums[i], nums[j]);
             }
-            System.out.println("확인 : " + nums[i]);
         }
-        Assertions.assertEquals(isUniqueCriteria,Boolean.TRUE);
     }
-
-
 }

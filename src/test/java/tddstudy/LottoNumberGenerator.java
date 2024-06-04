@@ -70,15 +70,12 @@ public class LottoNumberGenerator {
                 SecureRandom secureRandom = new SecureRandom();
                 for(int j = 0 ; j < 6; j++){
                     int randomNumber = secureRandom.nextInt(45) + 1; // 0에서 44까지 랜덤생성 후 +1
-                    System.out.println("생성" + randomNumber);
                     lottoNumbers[j] = randomNumber;
                 }
                 isUniqueCriteria = createRandom6Nums(lottoNumbers);
                 i--;
             }
-            System.out.println("몇번도니");
         }
-
         return lottoNumbers;
     }
 
