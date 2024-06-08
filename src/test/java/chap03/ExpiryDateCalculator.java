@@ -1,23 +1,42 @@
 package chap03;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 public class ExpiryDateCalculator {
 
     public LocalDate calculateExpiryDate(PayData payData){
 
-        if(payData.getFirstBillingDate() != null){
-            LocalDate candiDateExp = payData.getBillingDate().plusMonths(1);
-            if(payData.getFirstBillingDate().getDayOfMonth() != candiDateExp.getDayOfMonth()){
-                return candiDateExp.withDayOfMonth(payData.getFirstBillingDate().getDayOfMonth());
-            }
-        }
-        if(payData.getFirstBillingDate() != null){
-            if(payData.getFirstBillingDate().equals(LocalDate.of(2019, 1, 31))){
-                return LocalDate.of(2019, 3, 31);
-            }
-        }
+        int addedMonths = payData.getPayAmount() == 100_000 ? 12 : payData.getPayAmount() / 10_000;
 
-        return payData.getBillingDate().plusMonths(1);
+        if(payData.getFirstBillingDate() != null){
+            return expiryDateUsingFirstBillingDate(payData, addedMonths);
+        } else {
+            return payData.getBillingDate().plusMonths(addedMonths);
+        }
+    }
+
+    private LocalDate expiryDateUsingFirstBillingDate(PayData payData, int addedMonths) {
+        LocalDate candiDateExp = payData.getBillingDate().plusMonths(addedMonths);
+
+        final int dayOfFirstBilling = payData.getFirstBillingDate().getDayOfMonth();
+
+        if(isSameDayOfMonth(candiDateExp, dayOfFirstBilling)){
+            final int dayLenOfCandiMon = lastDayOfMonth(candiDateExp);
+            if(dayLenOfCandiMon < dayOfFirstBilling) {
+                return candiDateExp.withDayOfMonth(dayLenOfCandiMon);
+            }
+            return candiDateExp.withDayOfMonth(dayOfFirstBilling);
+        }else{
+            return candiDateExp;
+        }
+    }
+
+    private int lastDayOfMonth(LocalDate candiDateExp) {
+        return YearMonth.from(candiDateExp).lengthOfMonth();
+    }
+
+    private boolean isSameDayOfMonth(LocalDate candiDateExp, int dayOfFirstBilling) {
+        return dayOfFirstBilling != candiDateExp.getDayOfMonth();
     }
 }
