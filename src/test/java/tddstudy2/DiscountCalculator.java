@@ -15,7 +15,7 @@ public class DiscountCalculator {
         for(Product product : products){
             //totalPrice += product.getPrice();
             //3.
-            //totalPrice += discountBeforeTotalProductCalculation(product);
+            //totalPrice += discountProductCalculation(product);
 
             //5. 테스트가 완료 최소금액계산 기능을 넣어준다.
             //int result = discountProductCalculation(product);

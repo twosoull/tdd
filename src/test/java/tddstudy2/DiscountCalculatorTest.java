@@ -30,6 +30,10 @@ public class DiscountCalculatorTest {
     private DiscountCalculator discountCalculator = new DiscountCalculator();
 
     // 1. 처음에는 할인율이 적용되지 않았었다.
+    /**
+     * 1. 22000이 먼저 나오게 했으면 좋았을 것 같다. (하드로, 완벽하게 먼저 동작하는 것을 기준)
+     * 2. 익셉션 처리
+     * */
     @Test
     void 총_가격_계산() {
         Product 아디다스 = new Product("아디다스", 10000, 30, 6000);
@@ -42,7 +46,7 @@ public class DiscountCalculatorTest {
         productList.add(나이키);
 
         int totalPrice = discountCalculator.TotalProductCalculation(productList);
-
+        //assertEquals(totalPrice,30000);
         assertEquals(totalPrice,22000);
     }
 
@@ -50,12 +54,14 @@ public class DiscountCalculatorTest {
     void 할인된_금액_계산() {
         Product 아디다스 = new Product("아디다스", 10000, 50, 6000);
         int discountedPrice1 = discountCalculator.discountProductCalculation(아디다스);
-        assertEquals(discountedPrice1,9000);
+        assertEquals(discountedPrice1,5000);
 
         Product 나이키 = new Product("나이키", 20000, 30, 16000);
         int discountedPrice2 = discountCalculator.discountProductCalculation(나이키);
-        assertEquals(discountedPrice2,18000);
+        assertEquals(discountedPrice2,14000);
     }
+
+    //익셉션 처리
 
     @Test
     void 최소_가격_보장() {
@@ -66,6 +72,8 @@ public class DiscountCalculatorTest {
         assertEquals(result2, 8000);
         
     }
+
+    //익셉션 처리
 
     @Test
     void 상품_할인적용_및_최소가격보장() {
